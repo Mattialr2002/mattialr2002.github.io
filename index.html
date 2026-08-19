@@ -13,7 +13,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <title>Le Piccole Meraviglie del Mare</title>
 <style>
-:root { color-scheme: dark; --accento: #48CAE4; }
+/* Due tinte per capitolo, come nel libro (STATO_LAVORI §6): `--accento` e'
+   la chiara e sta sul fondo scuro, `--accento-scuro` porta il testo che
+   finisce sulla fascia di cielo in cima alla pagina. */
+:root { color-scheme: dark; --accento: #48CAE4; --accento-scuro: #0A5178; }
 * { box-sizing: border-box; }
 body {
   margin: 0; padding: 30px 20px 200px;
@@ -33,14 +36,18 @@ body::before {
 }
 .scafo { position: relative; z-index: 1; width: 100%; max-width: 33em;
          display: flex; flex-direction: column; align-items: center; }
+/* L'occhiello sta nei primi 45 px della pagina, dove il fondo e' quasi
+   bianco: con la tinta chiara il capitolo 9 stava a 1,5:1, cioe' invisibile. */
 .capitolo { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
-            font-weight: 700; color: var(--accento); margin: 0 0 12px; }
+            font-weight: 700; color: var(--accento-scuro); margin: 0 0 12px; }
 .ritratto { display: block; width: 150px; height: 150px; margin: 0 0 16px;
             background: var(--totto) center/contain no-repeat;
             filter: drop-shadow(0 8px 10px rgba(6,40,63,.35)); }
 h1 { font-family: "Arial Rounded MT Bold", "Trebuchet MS", Verdana, sans-serif;
      font-size: 2rem; line-height: 1.12; margin: 0 0 12px; color: #FFFFFF;
-     text-shadow: 0 2px 0 rgba(6,40,63,.4); }
+     /* il titolo cade sull'azzurro medio del gradiente: senza l'alone scuro
+        il bianco ci sta sopra a 2,4:1 e si legge male */
+     text-shadow: 0 2px 0 rgba(6,40,63,.45), 0 0 16px rgba(6,40,63,.6); }
 .sotto { font-size: 1.02rem; line-height: 1.5; color: #CFEAF6;
          margin: 0 0 24px; max-width: 24em; }
 .console { width: 100%; background: rgba(255,255,255,.10); border-radius: 20px;
@@ -69,8 +76,44 @@ video { width: 100%; display: block; border-radius: 10px; background: #06283F; }
 .manca { background: #FFD166; color: #0A2C3F; font-weight: 700;
          border-radius: 12px; padding: 12px 16px; margin-top: 22px;
          font-size: .84rem; }
+.larga { max-width: 40em; }
+.copertina { width: 100%; max-width: 20em; display: block; border-radius: 14px;
+             margin: 0 0 22px; box-shadow: 0 14px 30px rgba(6,40,63,.45); }
+.numeri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+          width: 100%; margin: 4px 0 6px; }
+.numeri div { background: rgba(255,255,255,.10); border-radius: 14px;
+              border: 1px solid rgba(255,255,255,.20); padding: 14px 6px; }
+.numeri b { display: block;
+            font-family: "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+            font-size: 1.7rem; color: #FFFFFF; line-height: 1; }
+.numeri span { display: block; margin-top: 6px; font-size: .64rem;
+               letter-spacing: .1em; text-transform: uppercase; color: #9FD6EA; }
+h2 { font-family: "Arial Rounded MT Bold", "Trebuchet MS", Verdana, sans-serif;
+     font-size: 1.3rem; color: #FFFFFF; margin: 40px 0 4px; }
+.occhio { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase;
+          font-weight: 700; color: var(--accento); margin: 0 0 14px; }
+.testo { font-size: 1.04rem; line-height: 1.62; text-align: left;
+         width: 100%; margin: 0 0 14px; }
+.testo b { color: #FFD166; }
+.provini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+           width: 100%; }
+.provini img { width: 100%; display: block; border-radius: 12px; }
+.perche { width: 100%; text-align: left; margin: 0; padding: 0;
+          list-style: none; }
+.perche li { background: rgba(255,255,255,.07); border-radius: 14px;
+             padding: 14px 18px; margin: 0 0 10px; font-size: .98rem;
+             line-height: 1.5; }
+.perche b { color: #FFFFFF; }
+.chiudi { width: 100%; background: #0E6B96; border-radius: 18px;
+          border: 2px solid var(--accento); padding: 22px;
+          font-size: 1.06rem; line-height: 1.55; margin: 34px 0 0; }
+.chiudi b { color: #FFD166; }
+@media (max-width: 30em) { .numeri { grid-template-columns: repeat(2, 1fr); } }
 .fondale { position: fixed; left: 0; right: 0; bottom: 0; pointer-events: none; }
-.fondale svg { display: block; width: 100%; height: auto; }
+/* max-height, altrimenti su uno schermo largo il disegno cresce con la
+   larghezza (120/800 = 15%) e oltre i 1333 px supera i 200 px di spazio che
+   il body tiene libero in fondo: la sabbia finiva sopra i crediti. */
+.fondale svg { display: block; width: 100%; height: auto; max-height: 180px; }
 .bolle { position: fixed; top: 0; left: 0; right: 0; bottom: 0;
          pointer-events: none; overflow: hidden; }
 .bolle i { position: absolute; bottom: -40px; border-radius: 50%;
@@ -94,7 +137,7 @@ video { width: 100%; display: block; border-radius: 10px; background: #06283F; }
 <div class="scafo">
 <p class="capitolo">Le Piccole Meraviglie del Mare</p>
 <i class="ritratto" role="img" aria-label="Totto, il polpo capitano"></i>
-<h1>I suoni del libro</h1>
+<h1>I suoni e i filmati del libro</h1>
 <p class="sotto">Queste pagine si aprono inquadrando i codici stampati sulle
 pagine da colorare. Non c'è niente da cercare qui: il libro ti porta dove
 devi andare.</p>
